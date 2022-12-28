@@ -19,3 +19,18 @@ export const fetchFailure = ( error ) => {
         payload: error
     }
 }
+
+export const fetchUsers = ( ) => {
+   return(dispatch) => {
+    dispatch(fetchStart())
+    fetch('https://jsonplaceholder.typicode.com/users')
+        .then(response => response.json())
+        .then(json => {
+            dispatch(fetchSuccess(json))
+            console.log(json)
+        })
+        .catch((err) => {
+            dispatch(fetchFailure(err))
+        })
+   }
+}

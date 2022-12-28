@@ -1,11 +1,11 @@
 import React from "react";
 import { connect } from "react-redux";
-// import {buyCake} from "../../redux"
+import { buyCake, buyIceCream } from "../redux"
 const NewItem = (props) => {
     return ( 
         <>
-            <h1>Item - {props.cakes}</h1>
-            {/* <button onClick={props.buyCake}>buy cake</button> */}
+            <h1>Item - {props.item}</h1>
+            <button onClick={props.buyItem}>buy item</button>
         </>
      );
 }
@@ -13,17 +13,19 @@ const NewItem = (props) => {
 const mapStateToProps = (state, ownProps) => {
     const itemState = ownProps.cake? state.cake.numberOfCakes : state.iceCream.numberOfIceCream
     return {
-        cakes: itemState
+        item: itemState
     }
 }
 
-// const mapDispatchToProps = dispatch => {
-//     return{
-//         buyCake: () => dispatch(buyCake())
-//     }
-// }
+const mapDispatchToProps = (dispatch, ownProps) => {
+    const dispatchFunction = ownProps.cake ? () => dispatch(buyCake()) : () => dispatch(buyIceCream())
+    return{
+        buyItem: dispatchFunction
+    }
+}
  
 export default connect(
     mapStateToProps, 
+    mapDispatchToProps
     ) 
     (NewItem);
